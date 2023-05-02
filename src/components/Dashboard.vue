@@ -4,7 +4,7 @@
       <div id="side-right" class="block">
         <div class="block-header mb-2">
           <img
-            src="https://avatars.githubusercontent.com/u/102707728?v=4"
+            src="https://gitlab.com/uploads/-/system/user/avatar/13002995/avatar.png?width=96"
             class="img-icon"
           />
           <div class="options">
@@ -23,7 +23,7 @@
         <div class="users-list">
           <div class="user-box">
             <img
-              src="https://avatars.githubusercontent.com/u/102707728?v=4"
+              src="https://gitlab.com/uploads/-/system/user/avatar/13002995/avatar.png?width=96"
               class="img-icon"
             />
             <div class="msg-info">
@@ -41,12 +41,29 @@
       </div>
       <div class="block msg-panel">
         <div class="block-header mb-2 user-panel">
-          <img
-            src="https://avatars.githubusercontent.com/u/102707728?v=4"
-            class="img-icon"
-          />
+          <div class="flex-user">
+            <img
+              src="https://gitlab.com/uploads/-/system/user/avatar/13002995/avatar.png?width=96"
+              class="img-icon"
+            />
+            <p>Eric</p>
+          </div>
           <div class="options">
-            <img src="@/assets/search.svg" alt="message" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
             <img src="@/assets/more-vertical.svg" alt="message" />
           </div>
         </div>
@@ -67,6 +84,35 @@
             </div>
           </div>
           <div class="msg-block">
+            <div class="position">
+              <p>
+                document.querySelector('button').addEventListener('click',
+                function() { const canvas = document.createElement('canvas');
+                canvas.width = window.innerWidth; canvas.height =
+                window.innerHeight; const ctx = canvas.getContext('2d');
+                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
+                canvas.height); const image = new Image(); image.src =
+                canvas.toDataURL('image/png'); document.body.appendChild(image);
+                });
+              </p>
+            </div>
+          </div>
+          <div class="msg-block right">
+            <div class="position">
+              <p>
+                document.querySelector('button').addEventListener('click',
+                function() { const canvas = document.createElement('canvas');
+                canvas.width = window.innerWidth; canvas.height =
+                window.innerHeight; const ctx = canvas.getContext('2d');
+                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
+                canvas.height); const image = new Image(); image.src =
+                canvas.toDataURL('image/png'); document.body.appendChild(image);
+                });
+              </p>
+            </div>
+          </div>
+
+          <div class="msg-block left">
             <div class="position">
               <p>
                 document.querySelector('button').addEventListener('click',
@@ -110,9 +156,11 @@ export default {
   display: grid;
   grid-template-columns: 350px 1fr;
   //   place-content: center;
+  overflow: hidden;
   height: 100vh;
   .block {
-    height: 95vh;
+    height: 100vh;
+    background: #111b21;
   }
 }
 .block-header {
@@ -120,7 +168,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background: #e9edef;
+  background: #222e35;
   .options {
     display: flex;
     align-items: center;
@@ -138,18 +186,27 @@ export default {
   object-fit: cover;
   background: gray;
 }
+.flex-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  p {
+    margin: 0;
+  }
+}
 .search-block {
   position: relative;
   display: flex;
   align-items: center;
-  background: #f0f2f5;
+  background: #222e35;
   padding: 5px;
   gap: 5px;
   border-radius: 10px;
   #search {
-    background: #f0f2f5;
+    background: #222e35;
     position: relative;
     border: none;
+    color: white;
     &::placeholder {
       padding-right: 5px;
       font-size: 15px;
@@ -175,7 +232,7 @@ export default {
       width: 60px;
       height: 60px;
     }
-    border-bottom: 1px solid rgba(0, 0, 0, 0.247);
+    border-bottom: 0.5px solid rgba(243, 243, 243, 0.247);
   }
 }
 .last-message {
@@ -203,19 +260,25 @@ export default {
 }
 .msg-panel {
   position: relative;
+  background: url("https://e1.pxfuel.com/desktop-wallpaper/407/713/desktop-wallpaper-in-celebration-of-whatsapps-dark-mode-whatsapp-aesthetic.jpg") !important;
   .message-input {
     position: absolute;
-    bottom: 0;
+    bottom: 8px;
     width: 100%;
     padding: 0 10px;
     input {
       border-radius: 15px;
       padding: 15px;
+      background: #222e35;
+      border: none;
+      color: white;
+      border: none !important;
+      box-shadow: none;
     }
   }
 }
 .user-panel {
-  border-left: 1px solid #dbdcdd;
+  border-left: 1px solid #192227;
 }
 .msg-body {
   position: relative;
@@ -230,14 +293,40 @@ export default {
     margin-bottom: 5%;
     display: flex;
     .position {
+      background: #176b5b;
+      color: white;
       max-width: 35%;
+      padding: 10px;
+      border-radius: 5px;
+      word-break: break-all;
     }
   }
+}
+.msg-body::-webkit-scrollbar-thumb {
+  background-color: #42454773;
+  border-radius: 20px;
+}
+.msg-body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.msg-body::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 .left {
   justify-content: flex-start !important;
 }
 .right {
   justify-content: flex-end !important;
+}
+span,
+p {
+  color: white !important;
+}
+svg{
+  cursor: pointer;
 }
 </style>
