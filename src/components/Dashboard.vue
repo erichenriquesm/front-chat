@@ -27,7 +27,7 @@
               class="img-icon"
             />
             <div class="msg-info">
-              <span class="name mt-4">{{user.name}}</span>
+              <span class="name mt-4">{{ user.name }}</span>
               <div class="x">
                 <div class="vist">
                   <img id="checked" src="@/assets/check.svg" alt="message" />
@@ -69,61 +69,14 @@
         </div>
 
         <div class="msg-body">
-          <div class="msg-block right">
+          <div
+            v-for="(message, index) in messages"
+            :key="index"
+            :class="{ right: message.user_id == $store.getters.user.id }"
+            class="msg-block"
+          >
             <div class="position">
-              <p>
-                document.querySelector('button').addEventListener('click',
-                function() { const canvas = document.createElement('canvas');
-                canvas.width = window.innerWidth; canvas.height =
-                window.innerHeight; const ctx = canvas.getContext('2d');
-                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
-                canvas.height); const image = new Image(); image.src =
-                canvas.toDataURL('image/png'); document.body.appendChild(image);
-                });
-              </p>
-            </div>
-          </div>
-          <div class="msg-block">
-            <div class="position">
-              <p>
-                document.querySelector('button').addEventListener('click',
-                function() { const canvas = document.createElement('canvas');
-                canvas.width = window.innerWidth; canvas.height =
-                window.innerHeight; const ctx = canvas.getContext('2d');
-                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
-                canvas.height); const image = new Image(); image.src =
-                canvas.toDataURL('image/png'); document.body.appendChild(image);
-                });
-              </p>
-            </div>
-          </div>
-          <div class="msg-block right">
-            <div class="position">
-              <p>
-                document.querySelector('button').addEventListener('click',
-                function() { const canvas = document.createElement('canvas');
-                canvas.width = window.innerWidth; canvas.height =
-                window.innerHeight; const ctx = canvas.getContext('2d');
-                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
-                canvas.height); const image = new Image(); image.src =
-                canvas.toDataURL('image/png'); document.body.appendChild(image);
-                });
-              </p>
-            </div>
-          </div>
-
-          <div class="msg-block">
-            <div class="position">
-              <p>
-                document.querySelector('button').addEventListener('click',
-                function() { const canvas = document.createElement('canvas');
-                canvas.width = window.innerWidth; canvas.height =
-                window.innerHeight; const ctx = canvas.getContext('2d');
-                ctx.fillStyle= 'white'; ctx.fillRect(0, 0, canvas.width,
-                canvas.height); const image = new Image(); image.src =
-                canvas.toDataURL('image/png'); document.body.appendChild(image);
-                });
-              </p>
+              <p>{{message.message}}</p>
             </div>
           </div>
         </div>
@@ -132,7 +85,7 @@
           <b-form-input
             placeholder="Envie uma mensagem"
             id="send"
-            v-model="message"
+            v-model="type_message"
           ></b-form-input>
         </div>
       </div>
@@ -143,19 +96,32 @@
 <script>
 import MiddlewareService from "@/services/MiddlewareService";
 export default {
-  data(){
+  data() {
     return {
       users: [],
-      message: ""
-    }
+      type_message: "",
+      user_selected: {},
+      messages: [],
+    };
   },
-  methods:{
-    getUsers(){
-      MiddlewareService.get("user/list")
-      .then(resp => {
-        this.users = resp.data.buscados
-      })
-    }
+  methods: {
+    getUsers() {
+      MiddlewareService.get("user/list").then((resp) => {
+        this.users = resp.data.buscados;
+      });
+    },
+    // getChat(){
+    //   MiddlewareService.get("chat/list")
+    //   .then(resp => {
+    //     // this.users = resp.data.buscados
+    //   })
+    // },
+    createMessage(data) {
+      MiddlewareService.post("chat/create", data).then((resp) => {
+        this.type_message = "";
+        this.messages = resp.data;
+      });
+    },
   },
   mounted() {
     this.getUsers();
@@ -164,18 +130,16 @@ export default {
     ).height;
     document.querySelector(".users-list").style.height =
       +side_height.replace("px", "") - 80 + "px";
-     const input_sender =  document.querySelector("#send");
-     input_sender.addEventListener("keypress", (e) => {
-        if(e.key === "Enter"){
-          console.log({
-            message: this.message,
-            user_id: 1,
-            to_id: 3
-          });
-
-          this.message = "";
-        }
-     });
+    const input_sender = document.querySelector("#send");
+    input_sender.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        let data = {
+          message: this.type_message,
+          to_id: 2,
+        };
+        this.createMessage(data);
+      }
+    });
   },
 };
 </script>
@@ -353,7 +317,7 @@ span,
 p {
   color: white !important;
 }
-svg{
+svg {
   cursor: pointer;
 }
 </style>
