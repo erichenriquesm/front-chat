@@ -21,13 +21,13 @@
           ></b-form-input>
         </div>
         <div class="users-list">
-          <div class="user-box">
+          <div class="user-box" v-for="(user, index) in users" :key="index">
             <img
               src="https://gitlab.com/uploads/-/system/user/avatar/13002995/avatar.png?width=96"
               class="img-icon"
             />
             <div class="msg-info">
-              <span class="name mt-4">Eric</span>
+              <span class="name mt-4">{{user.name}}</span>
               <div class="x">
                 <div class="vist">
                   <img id="checked" src="@/assets/check.svg" alt="message" />
@@ -145,12 +145,16 @@ import MiddlewareService from "@/services/MiddlewareService";
 export default {
   data(){
     return {
+      users: [],
       message: ""
     }
   },
   methods:{
     getUsers(){
-      MiddlewareService.get("user/list");
+      MiddlewareService.get("user/list")
+      .then(resp => {
+        this.users = resp.data.buscados
+      })
     }
   },
   mounted() {
