@@ -118,12 +118,16 @@ export default {
         MiddlewareService.get("chat/list").then((resp) => {
           this.insertMessage(resp.data);
         });
-      }, 3000);
+      }, 5000);
     },
-
+    scrollDown() {
+      const element = document.querySelector(".msg-body");
+      element.scrollTop = element.scrollHeight;
+    },
     insertMessage(messages) {
       messages.forEach((message) => {
         if (!this.messages.find((x) => x.id == message.id)) {
+          this.scrollDown();
           this.messages.push(message);
           this.removeCache();
         }
