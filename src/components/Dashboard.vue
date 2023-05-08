@@ -128,7 +128,7 @@ export default {
     createMessage(data) {
       MiddlewareService.post("chat/create", data).then((resp) => {
         this.type_message = "";
-        this.messages = resp.data;
+        this.insertMessage(resp.data);
       });
     },
   },
