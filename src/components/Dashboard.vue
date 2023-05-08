@@ -76,7 +76,7 @@
             class="msg-block"
           >
             <div class="position">
-              <p>{{message.message}}</p>
+              <p>{{ message.message }}</p>
             </div>
           </div>
         </div>
@@ -110,12 +110,21 @@ export default {
         this.users = resp.data.buscados;
       });
     },
-    // getChat(){
-    //   MiddlewareService.get("chat/list")
-    //   .then(resp => {
-    //     // this.users = resp.data.buscados
-    //   })
-    // },
+    getChat() {
+      setInterval(() => {
+        MiddlewareService.get("chat/list").then((resp) => {
+          this.insertMessage(resp.data);
+        });
+      }, 3000);
+    },
+
+    insertMessage(messages){
+      messages.forEach(message => {
+        if(!this.messages.find(x => x.id == message.id)){
+          this.messages.push(message);
+        }
+      });
+    },
     createMessage(data) {
       MiddlewareService.post("chat/create", data).then((resp) => {
         this.type_message = "";
@@ -124,7 +133,8 @@ export default {
     },
   },
   mounted() {
-    this.getUsers();
+    // this.getUsers();
+    this.getChat();
     var side_height = window.getComputedStyle(
       document.querySelector("#side-right")
     ).height;
