@@ -112,7 +112,7 @@
             </div>
           </div>
 
-          <div class="msg-block left">
+          <div class="msg-block">
             <div class="position">
               <p>
                 document.querySelector('button').addEventListener('click',
@@ -141,13 +141,20 @@
 </template>
 
 <script>
+import MiddlewareService from "@/services/MiddlewareService";
 export default {
   data(){
     return {
       message: ""
     }
   },
+  methods:{
+    getUsers(){
+      MiddlewareService.get("user/list");
+    }
+  },
   mounted() {
+    this.getUsers();
     var side_height = window.getComputedStyle(
       document.querySelector("#side-right")
     ).height;
@@ -161,6 +168,8 @@ export default {
             user_id: 1,
             to_id: 3
           });
+
+          this.message = "";
         }
      });
   },
@@ -315,6 +324,7 @@ export default {
       padding: 10px;
       border-radius: 5px;
       word-break: break-all;
+      padding-right: 35px;
     }
   }
 }
@@ -331,9 +341,6 @@ export default {
 }
 ::-webkit-scrollbar-track {
   background: transparent;
-}
-.left {
-  justify-content: flex-start !important;
 }
 .right {
   justify-content: flex-end !important;
