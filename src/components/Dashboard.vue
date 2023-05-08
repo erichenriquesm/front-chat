@@ -111,6 +111,9 @@ export default {
       });
     },
     getChat() {
+      MiddlewareService.get("chat/list").then((resp) => {
+        this.insertMessage(resp.data);
+      });
       setInterval(() => {
         MiddlewareService.get("chat/list").then((resp) => {
           this.insertMessage(resp.data);
@@ -118,9 +121,9 @@ export default {
       }, 3000);
     },
 
-    insertMessage(messages){
-      messages.forEach(message => {
-        if(!this.messages.find(x => x.id == message.id)){
+    insertMessage(messages) {
+      messages.forEach((message) => {
+        if (!this.messages.find((x) => x.id == message.id)) {
           this.messages.push(message);
         }
       });
@@ -133,7 +136,7 @@ export default {
     },
   },
   mounted() {
-    // this.getUsers();
+    this.getUsers();
     this.getChat();
     var side_height = window.getComputedStyle(
       document.querySelector("#side-right")
