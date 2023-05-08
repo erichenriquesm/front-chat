@@ -125,13 +125,20 @@ export default {
       messages.forEach((message) => {
         if (!this.messages.find((x) => x.id == message.id)) {
           this.messages.push(message);
+          this.removeCache();
         }
       });
     },
     createMessage(data) {
       MiddlewareService.post("chat/create", data).then((resp) => {
-        this.type_message = "";
         this.insertMessage(resp.data);
+      });
+    },
+    removeCache() {
+      let messages_cache = this.messages.filter((x) => x.id === "cache");
+      messages_cache.forEach((message) => {
+        let index = this.messages.indexOf(message);
+        this.messages.splice(index, 1);
       });
     },
   },
@@ -145,11 +152,17 @@ export default {
       +side_height.replace("px", "") - 80 + "px";
     const input_sender = document.querySelector("#send");
     input_sender.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && this.type_message.length) {
         let data = {
           message: this.type_message,
           to_id: 2,
         };
+        this.messages.push({
+          message: this.type_message,
+          user_id: this.$store.getters.user.id,
+          id: "cache",
+        });
+        this.type_message = "";
         this.createMessage(data);
       }
     });
