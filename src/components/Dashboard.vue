@@ -131,7 +131,8 @@
         <div class="message-input">
           <b-form-input
             placeholder="Envie uma mensagem"
-            id="search"
+            id="send"
+            v-model="message"
           ></b-form-input>
         </div>
       </div>
@@ -141,12 +142,27 @@
 
 <script>
 export default {
+  data(){
+    return {
+      message: ""
+    }
+  },
   mounted() {
     var side_height = window.getComputedStyle(
       document.querySelector("#side-right")
     ).height;
     document.querySelector(".users-list").style.height =
       +side_height.replace("px", "") - 80 + "px";
+     const input_sender =  document.querySelector("#send");
+     input_sender.addEventListener("keypress", (e) => {
+        if(e.key === "Enter"){
+          console.log({
+            message: this.message,
+            user_id: 1,
+            to_id: 3
+          });
+        }
+     });
   },
 };
 </script>
